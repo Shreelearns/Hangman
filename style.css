@@ -10,10 +10,22 @@
 	height: 100vh;
 	background-color: blue;
 	display: flex;
+    flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
-
+.title{
+    width: 60vw;
+	height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.heading{
+    color: white;
+    font-weight: 800;
+    font-size: 36px;
+}
 .container {
 	width: 60vw;
 	height: 60vh;

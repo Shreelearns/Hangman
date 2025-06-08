@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Hangman</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<body>
+		<div class="main">
+			<div class="container">
+				<div class="hangman">
+					<div class="stand">
+						<div class="pole"></div>
+						<div class="poletops">
+							<div class="poletop"></div>
+							<div class="poleslantline"></div>
+							<div class="polehangline"></div>
+								<div id="man">
+							<div id="hang1" hidden></div>
+							<div id="hang2" hidden></div>
+							<div id="hang3" hidden></div>
+							<div id="hang4" hidden></div>
+							<div id="hang5" hidden></div>
+							<div id="hang6" hidden></div>
+						</div>
+						</div>
+					
+					</div>
+				</div>
+				<div class="content">
+					<div id="input"></div>
+					<div id="keyboard"></div>
+					<div id="hint"></div>
+					<div id="playbtn">
+						<button style="padding: 10px" id="btn">Play</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			const keyboard = document.getElementById("keyboard");
+			const btn = document.getElementById("btn");
+			const input = document.getElementById("input");
+			const hint = document.getElementById("hint");
+			const keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+			const man=document.getElementById("man");
+
+			const words = [
+ 				 "Function", "Variable", "Loop", "Array", "String", "Boolean",
+ 				 "Condition", "Class", "Object", "Method", "Parameter", "Return",
+ 				 "Print", "Debug", "Error", "Exception", "Import", "Export",
+ 				 "Module", "Package", "API", "Fetch", "Promise", "Callback",
+ 				 "Event", "Listener", "Async", "Await", "Console", "Log",
+ 				 "Push", "Pull", "Commit", "Branch", "Merge", "Clone",
+ 				 "Test", "Case", "File", "Folder", "Path", "Database",
+ 				 "Query", "Select", "Insert", "Update", "Delete", "Input",
+ 				 "Output", "Schema", "Server", "Client", "Request", "Response",
+ 				 "JSON", "XML"
+];
+
+			const hints = [
+				"Hint : Reusable block of code invoked by name.", // Function
+				"Hint : Named storage location for data that can change.", // Variable
+				"Hint : Structure that repeats code while a condition holds.", // Loop
+				"Hint : Ordered collection indexed numerically.", // Array
+				"Hint : Sequence of characters.", // String
+				"Hint : Data type representing true or false.", // Boolean
+				"Hint : Expression that evaluates to true or false.", // Condition
+				"Hint : Blueprint for creating similar objects.", // Class
+				"Hint : Instance of a class containing data and behavior.", // Object
+				"Hint : Function that belongs to an object or class.", // Method
+				"Hint : Named value supplied to a function.", // Parameter
+				"Hint : Value a function hands back to its caller.", // Return
+				"Hint : Command to display text or data.", // Print
+				"Hint : Process of finding and fixing problems in code.", // Debug
+				"Hint : Problem detected by a program at runtime.", // Error
+				"Hint : Runtime error that can be caught and handled.", // Exception
+				"Hint : Bring code from another file into scope.", // Import
+				"Hint : Make code available for other files to use.", // Export
+				"Hint : Self-contained file with related code or functionality.", // Module
+				"Hint : Collection of related modules distributed together.", // Package
+				"Hint : Interface for interacting with a service or library.", // API
+				"Hint : Retrieve a resource over the network.", // Fetch
+				"Hint : Object representing the future result of async work.", // Promise
+				"Hint : Function executed after another operation finishes.", // Callback
+				"Hint : Action that occurs within a program or system.", // Event
+				"Hint : Code that reacts when an event occurs.", // Listener
+				"Hint : Keyword declaring an asynchronous function.", // Async
+				"Hint : Keyword that pauses until a Promise resolves.", // Await
+				"Hint : Built-in object for debugging output in JS.", // Console
+				"Hint : Record of information sent to the console.", // Log
+				"Hint : Add an item to the end of a list or repository.", // Push
+				"Hint : Download changes from a remote repository.", // Pull
+				"Hint : Snapshot of changes recorded in version control.", // Commit
+				"Hint : Parallel line of development in version control.", // Branch
+				"Hint : Combine changes from different branches.", // Merge
+				"Hint : Copy a remote repository to your machine.", // Clone
+				"Hint : Procedure to verify code behaves as expected.", // Test
+				"Hint : Specific scenario or input in a test suite.", // Case
+				"Hint : Single document stored on disk.", // File
+				"Hint : Container that holds multiple files.", // Folder
+				"Hint : Location pointing to a file or folder.", // Path
+				"Hint : Organized collection of structured data.", // Database
+				"Hint : Instruction to interact with a database.", // Query
+				"Hint : Command to retrieve data from a table.", // Select
+				"Hint : Command to add new rows to a table.", // Insert
+				"Hint : Command to modify existing data.", // Update
+				"Hint : Command to remove data from a table.", // Delete
+				"Hint : Data supplied by a user or another system.", // Input
+				"Hint : Data produced and sent out by a program.", // Output
+				"Hint : Structure describing how data is organized.", // Schema
+				"Hint : Computer that provides resources or services.", // Server
+				"Hint : Computer/application that consumes those services.", // Client
+				"Hint : Message sent by a client to a server.", // Request
+				"Hint : Message the server sends back to the client.", // Response
+				"Hint : Lightweight text format using key-value pairs.", // JSON
+				"Hint : Markup language that uses tags and brackets.", // XML
+			]
+			
+			let count = 0;
+			let random = Math.random()
+			let index = Math.floor(random * words.length).toFixed(0)
+			let selectedword = words[index].toUpperCase()
+			let selectedhint = hints[index];
+			
+			for (let i = 0; i < keys.length; i++) {
+				const key = document.createElement("button")
+				key.style.cssText ="width:5vh;height:5vh;color:white;font-size:2.5vh;border:1px solid black;margin:8px;border-radius:4px;background-color: rgb(3, 3, 232);text-align:center"
+				key.innerText = keys[i]
+				key.addEventListener("click", () => {
+					let flag = false;
+					for (let k = 0; k < selectedword.length; k++) {
+						if (key.innerText.toUpperCase().trim() ==selectedword[k].toUpperCase().trim()) {
+							flag = true
+							boxes[k].innerText=key.innerText
+						}
+					}
+						if (flag) {
+							key.style.cssText ="width:5vh;height:5vh;color:white;font-size:2.5vh;border:1px solid black;margin:8px;border-radius:4px;background-color: green;text-align:center";
+
+						} else {
+							key.style.cssText ="width:5vh;height:5vh;color:white;font-size:2.5vh;border:1px solid black;margin:8px;border-radius:4px;background-color: red;text-align:center";
+							count++;
+							document.querySelector(`#hang${count}`)?.classList.add("hidden");
+							if(count==6){
+								alert("You lost the game !! Better luck next time !!!");
+							}
+						}
+						}
+				)
+				keyboard.append(key)
+			}
+			let boxes=[];
+			btn.addEventListener("click", () => {
+				for (let j = 0; j < selectedword.length; j++) {
+					let box = document.createElement("div")
+					box.style.cssText ="width:5vh;height:5vh;border:2px solid blue;margin:0.5vh; background-color: white;display:flex;align-items:center;justify-content:center;font-size:2.5vh;font-weight:700"
+					input.append(box);
+					boxes.push(box);
+				}
+				
+				hint.append(selectedhint);
+			})
+		</script>
+	</body>
+</html>

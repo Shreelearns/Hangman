@@ -128,7 +128,7 @@
 			let selectedword = words[index].toUpperCase()
 			let selectedhint = hints[index];
 			
-			for (let i = 0; i < keys.length; i++) {
+		for (let i = 0; i < keys.length; i++) {
 				const key = document.createElement("button")
 				key.style.cssText ="width:5vh;height:5vh;color:white;font-size:2.5vh;border:1px solid black;margin:8px;border-radius:4px;background-color: rgb(3, 3, 232);text-align:center"
 				key.innerText = keys[i]
@@ -148,7 +148,12 @@
 							count++;
 							document.querySelector(`#hang${count}`)?.classList.add("hidden");
 							if(count==6){
-								alert("You lost the game !! Better luck next time !!!");
+								alert(`Word was = ${selectedword} Better luck next time !!!`);
+								man.style.cssText='margin-top:100px;rotate:90deg';
+								btn.textContent="Reset Game";
+								btn.addEventListener("click", () => location.reload());
+								hint.textContent="";
+								input.textContent="";
 							}
 						}
 						}
@@ -163,8 +168,9 @@
 					input.append(box);
 					boxes.push(box);
 				}
-				
-				hint.append(selectedhint);
+				if(hint.textContent==""){
+					hint.append(selectedhint);
+				}
 			})
 		</script>
 	</body>
